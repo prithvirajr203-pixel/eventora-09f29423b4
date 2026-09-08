@@ -96,7 +96,7 @@ button.card-btn{background:var(--accent);color:var(--white);padding:.5rem .75rem
 
 /* Speakers Section */
 #speakers_section .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2rem;}
-.speaker-card{background:var(--white);padding:1rem;border-radius:.5rem;box-shadow:0 4px 10px rgba(0,0,0,.05);text-align:center;}
+.speaker-card{background:var(--white);padding:1rem;border-radius:.5rem;box-shadow:0 4 10px rgba(0,0,0,.05);text-align:center;}
 .speaker-card img{width:100%;height:180px;object-fit:cover;border-radius:.5rem;margin-bottom:.75rem;}
 .speaker-card h3{font-size:1.15rem;margin-bottom:.25rem;}
 .speaker-card p{font-size:.9rem;color:var(--neutral-dark);}
@@ -127,6 +127,20 @@ form textarea{resize:vertical;}
   header{flex-direction:column;align-items:flex-start;}
   nav{margin-top:.5rem;}
   #event_categories input[type="search"]{width:100%;}
+}
+
+/* Upcoming Events Carousel */
+#event_cards .grid{
+  display:flex;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  gap:1rem;
+  padding-bottom:1rem;
+  margin-top:2rem;
+}
+#event_cards .grid .card{
+  flex:0 0 calc(25% - 1rem);
+  min-width:250px;
 }
 </style>
 </head>
