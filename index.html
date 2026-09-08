@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Eventora - Discover Your Next Adventure</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* Root variables for palette */
+:root{
+  --primary:#1e3a8a; /* deep blue */
+  --accent:#f59e0b; /* amber */
+  --neutral-light:#f3f4f6; /* light gray */
+  --neutral-dark:#1f2937; /* dark gray */
+  --white:#ffffff;
+  --black:#111827;
+  --font-stack:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Global resets */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font-stack);color:var(--black);line-height:1.6;}
+img{max-width:100%;height:auto;display:block;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;border:none;background:none;}
+
+/* Layout */
+header{background:var(--primary);color:var(--white);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
+header .logo{font-size:1.5rem;font-weight:bold;}
+nav a{margin-left:1rem;color:var(--white);}
+section{padding:4rem 2rem;max-width:1200px;margin:auto;}
+section:nth-child(even){background:var(--neutral-light);}
+h1,h2{margin-bottom:1rem;font-weight:700;}
+h1{font-size:2.5rem;}
+h2{font-size:1.75rem;}
+button.primary{background:var(--accent);color:var(--white);padding:.75rem 1.5rem;border-radius:.5rem;font-weight:bold;transition:background .3s;}
+button.primary:hover{background:#c77d04;}
+footer{background:var(--neutral-dark);color:var(--white);text-align:center;padding:2rem;}
+
+/* Hero */
+#hero{position:relative;background:url('https://images.pexels.com/photos/16827315/pexels-photo-16827315.jpeg?auto=compress&cs=tinysrgb&h=650&w=940') center/cover no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--white);height:60vh;}
+#hero::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);}
+#hero .content{position:relative;z-index:1;}
+#hero h1{font-size:3rem;margin-bottom:.5rem;}
+#hero p{font-size:1.25rem;margin-bottom:1.5rem;}
+#hero button{font-size:1rem;}
+#hero .scroll-indicator{margin-top:2rem;}
+#hero .scroll-indicator::after{content:'↓';font-size:2rem;display:block;margin:auto;animation:scroll 2s infinite;}
+@keyframes scroll{0%{opacity:0.3;transform:translateY(0);}50%{opacity:1;transform:translateY(10px);}100%{opacity:0.3;transform:translateY(0);}}
+
+/* About */
+#about{display:flex;flex-wrap:wrap;align-items:center;}
+#about img{flex:1 1 400px;border-radius:.5rem;margin-right:2rem;}
+#about .text{flex:1 1 400px;}
+#about .text h2{margin-bottom:.5rem;}
+#about .text p{margin-bottom:1rem;}
+#about button{margin-top:.5rem;}
+
+/* Featured Events */
+#featured_events .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2rem;}
+.card{background:var(--white);border-radius:.5rem;overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,.1);transition:transform .3s;}
+.card:hover{transform:translateY(-5px);}
+.card img{height:180px;object-fit:cover;}
+.card .info{padding:1rem;}
+.card .info h3{font-size:1.25rem;margin-bottom:.5rem;}
+.card .info p{font-size:.9rem;margin-bottom:.5rem;}
+.card .info span{display:block;font-weight:bold;}
+button.card-btn{background:var(--accent);color:var(--white);padding:.5rem .75rem;border-radius:.3rem;font-size:.9rem;margin-top:.5rem;}
+
+/* Categories */
+#event_categories{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;}
+#event_categories .chip{background:var(--neutral-light);padding:.4rem .75rem;border-radius:1.5rem;font-size:.9rem;cursor:pointer;transition:background .3s;}
+#event_categories .chip:hover{background:var(--accent);color:var(--white);}
+#event_categories input[type="search"]{margin-left:auto;padding:.4rem .75rem;border-radius:.5rem;border:1px solid #ccc;width:200px;}
+#event_categories input[type="search"]:focus{outline:none;border-color:var(--accent);}
+
+/* Testimonial Carousel */
+#testimonials{position:relative;background:url('https://images.pexels.com/photos/25752085/pexels-photo-25752085.jpeg?auto=compress&cs=tinysrgb&h=650&w=940') center/cover no-repeat;color:var(--white);padding:4rem 2rem;}
+#testimonials::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);}
+#testimonials .content{position:relative;z-index:1;max-width:800px;margin:auto;}
+#testimonials .carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:1rem;padding-top:1rem;}
+#testimonials .carousel::-webkit-scrollbar{display:none;}
+#testimonials .card{background:rgba(255,255,255,.15);padding:1.5rem;border-radius:.5rem;min-width:250px;scroll-snap-align:start;color:var(--white);}
+#testimonials .card img{width:50px;height:50px;border-radius:50%;margin-bottom:.5rem;}
+#testimonials .card p{font-size:.95rem;margin-bottom:.5rem;}
+#testimonials .card h4{font-weight:bold;}
+
+/* Event Search & Filters */
+#event_search_and_filters{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;}
+#event_search_and_filters input{flex:1;padding:.5rem 1rem;border-radius:.5rem;border:1px solid #ccc;}
+#event_search_and_filters button{padding:.5rem 1rem;border-radius:.5rem;background:var(--primary);color:var(--white);}
+
+/* Schedule Section */
+#schedule_section table{width:100%;border-collapse:collapse;}
+#schedule_section th,#schedule_section td{padding:.75rem;text-align:left;border-bottom:1px solid #e5e7eb;}
+#schedule_section th{background:var(--neutral-light);}
+
+/* Speakers Section */
+#speakers_section .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2rem;}
+.speaker-card{background:var(--white);padding:1rem;border-radius:.5rem;box-shadow:0 4px 10px rgba(0,0,0,.05);text-align:center;}
+.speaker-card img{width:100%;height:180px;object-fit:cover;border-radius:.5rem;margin-bottom:.75rem;}
+.speaker-card h3{font-size:1.15rem;margin-bottom:.25rem;}
+.speaker-card p{font-size:.9rem;color:var(--neutral-dark);}
+
+/* Map Location */
+#map_location img{border-radius:.5rem;margin-top:1rem;}
+
+/* Forms */
+form{display:flex;flex-direction:column;gap:1rem;margin-top:1rem;}
+form input,form textarea{padding:.75rem;border-radius:.5rem;border:1px solid #ccc;}
+form button{align-self:flex-start;background:var(--accent);color:var(--white);padding:.75rem 1.5rem;border-radius:.5rem;font-weight:bold;}
+form textarea{resize:vertical;}
+
+/* Modal */
+#modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:opacity .3s;}
+#modal.active{visibility:visible;opacity:1;}
+#modal .content{background:var(--white);padding:2rem;border-radius:.5rem;width:90%;max-width:500px;position:relative;}
+#modal .close{position:absolute;top:.5rem;right:.5rem;font-size:1.5rem;color:var(--black);cursor:pointer;}
+
+/* Toast */
+#toast{position:fixed;bottom:1rem;right:1rem;background:var(--primary);color:var(--white);padding:.75rem 1.5rem;border-radius:.5rem;visibility:hidden;opacity:0;transition:opacity .3s;}
+#toast.show{visibility:visible;opacity:1;}
+
+/* Responsive */
+@media(max-width:768px){
+  #about{flex-direction:column;}
+  #about img{margin-right:0;margin-bottom:1rem;}
+  header{flex-direction:column;align-items:flex-start;}
+  nav{margin-top:.5rem;}
+  #event_categories input[type="search"]{width:100%;}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Eventora</div>
+  <nav>
+    <a href="#hero">Home</a>
+    <a href="#event_cards">Events</a>
+    <a href="#about">About</a>
+    <a href="#contact_form">Contact</a>
+  </nav>
+</header>
+
+<section id="hero">
+  <div class="content">
+    <h1>Discover Your Next Adventure</h1>
+    <p>From campus workshops to global conferences, Eventora brings the world of events to your fingertips.</p>
+    <button class="primary" id="exploreBtn">Explore Events</button>
+    <div class="scroll-indicator"></div>
+  </div>
+</section>
+
+<section id="about">
+  <img src="https://images.pexels.com/photos/7212946/pexels-photo-7212946.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="About us">
+  <div class="text">
+    <h2>Meet Eventora</h2>
+    <p>Founded by a team of event enthusiasts, Eventora empowers creators and attendees alike to connect, discover, and thrive in a vibrant event ecosystem.</p>
+    <button class="primary">Explore Our Team</button>
+  </div>
+</section>
+
+<section id="featured_events">
+  <h2>Spotlight Events</h2>
+  <div class="grid">
+    <!-- Event card 0 -->
+    <div class="card">
+      <img src="https://images.pexels.com/photos/9275222/pexels-photo-9275222.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Tech Innovators Conference 2026">
+      <div class="info">
+        <h3>Tech Innovators Conference 2026</h3>
+        <p>Oct 12-14, 2026 • San Francisco, CA</p>
+        <span>$299</span>
+        <button class="card-btn">See Details</button>
+      </div>
+    </div>
+    <!-- Event card 1 -->
+    <div class="card">
+      <img src="https://images.pexels.com/photos/14364672/pexels-photo-14364672.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Jazz Night Live">
+      <div class="info">
+        <h3>Jazz Night Live</h3>
+        <p>Nov 5, 2026 • New Orleans, LA</p>
+        <span>Free</span>
+        <button class="card-btn">See Details</button>
+      </div>
+    </div>
+    <!-- Event card 2 -->
+    <div class="card">
+      <img src="https://images.pexels.com/photos/28683722/pexels-photo-28683722.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="AI & Ethics Workshop">
+      <div class="info">
+        <h3>AI & Ethics Workshop</h3>
+        <p>Dec 1, 2026 • Online</p>
+        <span>$49</span>
+        <button class="card-btn">See Details</button>
+      </div>
+    </div>
+  </div>
+  <button class="primary" style="margin-top:2rem;">See All Events</button>
+</section>
+
+<section id="event_categories">
+  <h2>Explore by Category</h2>
+  <p>Filter events by your interests—conferences, workshops, concerts, networking, and hackathons—all in one place.</p>
+  <div>
+    <div class="chip">Conferences</div>
+    <div class="chip">Workshops</div>
+    <div class="chip">Concerts</div>
+    <div class="chip">Networking</div>
+    <div class="chip">Hackathons</div>
+    <input type="search" placeholder="Search events...">
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="content">
+    <h2>What Our Users Say</h2>
+    <div class="carousel">
+      <div class="card">
+        <img src="https://images.pexels.com/photos/9064790/pexels-photo-9064790.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Jordan Lee">
+        <p>"Eventora made my conference planning a breeze! The dashboard is intuitive and the support team is top‑notch."</p>
+        <h4>Jordan Lee – Event Organizer</h4>
+      </div>
+      <div class="card">
+        <img src="https://images.pexels.com/photos/33984196/pexels-photo-33984196.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Maya Patel">
+        <p>"I found my first hackathon through Eventora and it was a game changer for my career."</p>
+        <h4>Maya Patel – Student</h4>
+      </div>
+      <div class="card">
+        <img src="https://images.pexels.com/photos/25752085/pexels-photo-25752085.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Alex Chen">
+        <p>"The real‑time updates keep me in the loop—no more missed sessions."</p>
+        <h4>Alex Chen – Attendee</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="event_search_and_filters">
+  <h2>Find Your Next Event</h2>
+  <p>Search by keyword, date, location, or tag to discover events that fit your schedule and interests.</p>
+  <div>
+    <input type="search" id="searchInput" placeholder="Search events...">
+    <button class="primary" id="searchBtn">Search</button>
+  </div>
+</section>
+
+<section id="event_cards">
+  <h2>Upcoming Events</h2>
+  <div class="grid">
+    <!-- Event card 0 -->
+    <div class="card">
+      <img src="https://images.pexels.com/photos/9034249/pexels-photo-9034249.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Startup Pitch Night">
+      <div class="info">
+        <h3>Startup Pitch Night</h3>
+        <p>Sep 20, 2026 • Austin, TX</p>
+        <span>$99</span>
+        <button class="card-btn">Register</button>
+      </div>
+    </div>
+    <!-- Event card 1 -->
+    <div class="card">
+      <img src="https://images.pexels.com/photos/31485867/pexels-photo-31485867.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Digital Marketing Summit">
+      <div class="info">
+        <h3>Digital Marketing Summit</h3>
+        <p>Oct 3, 2026 • Chicago, IL</p>
+        <span>$199</span>
+        <button class="card-btn">Register</button>
+      </div>
+    </div>
+    <!-- Event card 2 -->
+    <div class="card">
+      <img src="https://images.pexels.com/photos/5380664/pexels-photo-5380664.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Campus Hackathon">
+      <div class="info">
+        <h3>Campus Hackathon</h3>
+        <p>Oct 15-17, 2026 • Online</p>
+        <span>Free</span>
+        <button class="card-btn">Register</button>
+      </div>
+    </div>
+    <!-- Event card 3 -->
+    <div class="card">
+      <img src="https://images.pexels.com/photos/12657546/pexels-photo-12657546.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Music Fest 2026">
+      <div class="info">
+        <h3>Music Fest 2026</h3>
+        <p>Nov 10, 2026 • Los Angeles, CA</p>
+        <span>$149</span>
+        <button class="card-btn">Register</button>
+      </div>
+    </div>
+    <!-- Event card 4 -->
+    <div class="card">
+      <img src="https://images.pexels.com/photos/34419794/pexels-photo-34419794.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Leadership Workshop">
+      <div class="info">
+        <h3>Leadership Workshop</h3>
+        <p>Nov 22, 2026 • Boston, MA</p>
+        <span>$79</span>
+        <button class="card-btn">Register</button>
+      </div>
+    </div>
+    <!-- Event card 5 -->
+    <div class="card">
+      <img src="https://images.pexels.com/photos/35138560/pexels-photo-35138560.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Health & Wellness Expo">
+      <div class="info">
+        <h3>Health & Wellness Expo</h3>
+        <p>Dec 5, 2026 • Miami, FL</p>
+        <span>$59</span>
+        <button class="card-btn">Register</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="event_overview">
+  <h2>Tech Innovators Conference 2026</h2>
+  <img src="https://images.pexels.com/photos/29708260/pexels-photo-29708260.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Conference keynote">
+  <p>Join industry leaders and innovators for three days of keynote speeches, panel discussions, and networking opportunities. Secure your spot today and be part of the future of technology.</p>
+  <button class="primary">Register Now</button>
+</section>
+
+<section id="schedule_section">
+  <h2>Agenda</h2>
+  <table>
+    <thead>
+      <tr><th>Time</th><th>Title</th><th>Speaker</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>09:00 AM</td><td>Opening Keynote: The Future of AI</td><td>Dr. Maya Patel</td></tr>
+      <tr><td>10:30 AM</td><td>Panel: Ethics in Machine Learning</td><td>Panelists</td></tr>
+      <tr><td>12:00 PM</td><td>Lunch & Networking</td><td>N/A</td></tr>
+      <tr><td>01:30 PM</td><td>Workshop: Building AI Models</td><td>Alex Chen</td></tr>
+      <tr><td>03:00 PM</td><td>Breakout Sessions</td><td>Various</td></tr>
+      <tr><td>04:30 PM</td><td>Closing Remarks</td><td>Eventora Team</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="speakers_section">
+  <h2>Featured Speakers</h2>
+  <div class="grid">
+    <!-- Speaker 0 -->
+    <div class="speaker-card">
+      <img src="https://images.pexels.com/photos/9064790/pexels-photo-9064790.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Dr. Maya Patel">
+      <h3>Dr. Maya Patel</h3>
+      <p>Chief AI Officer, InnovateX</p>
+      <p>Dr. Patel leads research in ethical AI and has spoken at over 50 global conferences.</p>
+    </div>
+    <!-- Speaker 1 -->
+    <div class="speaker-card">
+      <img src="https://images.pexels.com/photos/27826202/pexels-photo-27826202.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Alex Chen">
+      <h3>Alex Chen</h3>
+      <p>Lead Data Scientist, TechNova</p>
+      <p>Alex specializes in scalable machine learning solutions and mentors aspiring data scientists.</p>
+    </div>
+    <!-- Speaker 2 -->
+    <div class="speaker-card">
+      <img src="https://images.pexels.com/photos/27826202/pexels-photo-27826202.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Sofia Ramirez">
+      <h3>Sofia Ramirez</h3>
+      <p>Product Manager, FutureApps</p>
+      <p>Sofia bridges tech and user experience, driving product innovation across industries.</p>
+    </div>
+  </div>
+</section>
+
+<section id="map_location">
+  <h2>Venue Location</h2>
+  <p>San Francisco Convention Center, 123 Market St, San Francisco, CA 94105. Use the map below to get directions and parking info.</p>
+  <img src="https://images.pexels.com/photos/8828418/pexels-photo-8828418.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Venue map">
+  <button class="primary" style="margin-top:.75rem;">Get Directions</button>
+</section>
+
+<section id="registration_form">
+  <h2>Register for the Conference</h2>
+  <p>Fill out your details, choose your ticket type, and secure your seat at the Tech Innovators Conference 2026.</p>
+  <form id="regForm">
+    <input type="text" placeholder="Full Name" required>
+    <input type="email" placeholder="Email Address" required>
+    <input type="text" placeholder="Ticket Type" required>
+    <button class="primary">Complete Registration</button>
+  </form>
+</section>
+
+<section id="registration_confirmation">
+  <h2>Registration Successful</h2>
+  <p>Thank you for registering! Your ticket has been emailed and your seat is reserved. Check your inbox for the event details.</p>
+  <button class="primary">View Ticket</button>
+</section>
+
+<section id="user_dashboard">
+  <h2>Your Dashboard</h2>
+  <p>Manage your upcoming events, view past attendances, and keep track of saved events—all in one place.</p>
+  <button class="primary">Manage Events</button>
+</section>
+
+<section id="saved_events_section">
+  <h2>Saved Events</h2>
+  <div class="grid">
+    <!-- Saved event 0 -->
+    <div class="card">
+      <img src="https://images.pexels.com/photos/9419224/pexels-photo-9419224.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Jazz Night Live">
+      <div class="info">
+        <h3>Jazz Night Live</h3>
+        <p>Nov 5, 2026 • New Orleans, LA</p>
+        <span>Free</span>
+        <button class="card-btn">Open</button>
+      </div>
+    </div>
+    <!-- Saved event 1 -->
+    <div class="card">
+      <img src="https://images.pexels.com/photos/34987121/pexels-photo-34987121.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="AI & Ethics Workshop">
+      <div class="info">
+        <h3>AI & Ethics Workshop</h3>
+        <p>Dec 1, 2026 • Online</p>
+        <span>$49</span>
+        <button class="card-btn">Open</button>
+      </div>
+    </div>
+    <!-- Saved event 2 -->
+    <div class="card">
+      <img src="https://images.pexels.com/photos/35138560/pexels-photo-35138560.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Health & Wellness Expo">
+      <div class="info">
+        <h3>Health & Wellness Expo</h3>
+        <p>Dec 5, 2026 • Miami, FL</p>
+        <span>$59</span>
+        <button class="card-btn">Open</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="create_event_form">
+  <h2>Create Your Event</h2>
+  <p>Step-by-step wizard to set up your event details, ticketing, and promotion. Launch your event in minutes.</p>
+  <button class="primary">Create Event</button>
+</section>
+
+<section id="event_preview">
+  <h2>Event Preview</h2>
+  <p>Review your event listing before publishing. Make sure all details are accurate and engaging.</p>
+  <button class="primary">Publish</button>
+</section>
+
+<section id="organizer_analytics">
+  <h2>Event Analytics</h2>
+  <p>Track registrations, attendance, revenue, and engagement metrics to measure your event's success.</p>
+  <button class="primary">View Full Report</button>
+</section>
+
+<section id="attendee_list">
+  <h2>Attendee List</h2>
+  <p>Search, filter, and export attendee information for your event. Manage your audience with ease.</p>
+  <button class="primary">Export List</button>
+</section>
+
+<section id="user_profile">
+  <h2>Your Profile</h2>
+  <p>Update your personal information, preferences, and notification settings to personalize your Eventora experience.</p>
+  <button class="primary">Save Changes</button>
+</section>
+
+<section id="contact_form">
+  <h2>Get in Touch</h2>
+  <p>Have questions or need support? Send us a message and our team will get back to you promptly.</p>
+  <form id="contactForm">
+    <input type="text" placeholder="Name" required>
+    <input type="email" placeholder="Email" required>
+    <textarea rows="4" placeholder="Message" required></textarea>
+    <button class="primary">Send Message</button>
+  </form>
+</section>
+
+<section id="faq_section">
+  <h2>Frequently Asked Questions</h2>
+  <p>Find answers to common questions about using Eventora, event policies, and technical support.</p>
+</section>
+
+<div id="toast">Action completed!</div>
+<div id="modal">
+  <div class="content">
+    <span class="close">&times;</span>
+    <h3>Thank you!</h3>
+    <p>Your action was successful.</p>
+  </div>
+</div>
+
+<script>
+const searchBtn=document.getElementById('searchBtn');
+const searchInput=document.getElementById('searchInput');
+const eventCards=document.querySelectorAll('#event_cards .card');
+searchBtn.addEventListener('click',()=>{
+  const term=searchInput.value.toLowerCase();
+  eventCards.forEach(card=>{
+    const title=card.querySelector('.info h3').textContent.toLowerCase();
+    card.style.display=title.includes(term)?'block':'none';
+  });
+});
+document.getElementById('exploreBtn').onclick=()=>{location.hash='#event_cards';}
+function showToast(msg){const toast=document.getElementById('toast');toast.textContent=msg;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),3000);}
+document.querySelectorAll('#contactForm button').forEach(b=>{
+  b.addEventListener('click',e=>{
+    e.preventDefault();showToast('Message sent!');});
+});
+document.querySelectorAll('#regForm button').forEach(b=>{
+  b.addEventListener('click',e=>{
+    e.preventDefault();showToast('Registration complete!');});
+});
+</script>
+<footer>
+  <p>© 2026 Eventora. All rights reserved.</p>
+</footer>
+</body>
+</html>
