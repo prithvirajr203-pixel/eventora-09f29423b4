@@ -136,11 +136,26 @@ form textarea{resize:vertical;}
   overflow-x:auto;
   gap:1rem;
   padding-bottom:1rem;
-  margin-top:2rem;
 }
 #event_cards .grid .card{
   flex:0 0 calc(25% - 1rem);
   min-width:250px;
+}
+
+/* Saved Events Carousel */
+#saved_events_section .grid{
+  display:flex;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  gap:1rem;
+  padding-bottom:1rem;
+}
+#saved_events_section .grid .card{
+  flex:0 0 calc(25% - 1rem);
+  min-width:250px;
+}
+#saved_events_section .grid::-webkit-scrollbar{
+  display:none;
 }
 </style>
 </head>
